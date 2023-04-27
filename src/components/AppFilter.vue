@@ -1,7 +1,8 @@
 <template lang="pug">
 .search
-  font-awesome-icon(icon="fa-solid fa-magnifying-glass")
-  input(type="text" v-model="input" placeholder="Search for a country...")
+  font-awesome-icon.search__icon(icon="fa-solid fa-magnifying-glass")
+  input.search__input(type="text" v-model="text" @input="searchCountry(text)" placeholder="Search for a country...")
+  p {{ text }}
 select.search__select(name="select" @change="filter()")
   option(value="" disabled selected) Filter by Region
   option(value="Africa") Africa
@@ -14,7 +15,12 @@ select.search__select(name="select" @change="filter()")
 <script>
 export default {
   name: "AppFilter",
-  props: ["filter"],
+  props: ["filter", "searchCountry"],
+  data() {
+    return {
+      text: ''
+    }
+  },
 }
 </script>
 
