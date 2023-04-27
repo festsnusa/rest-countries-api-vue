@@ -1,6 +1,8 @@
 <template lang="pug">
 .cards
-  .card(v-for="value in arr")
+  RouterLink(v-for="value in arr"
+    :to="{ name: 'card', params: {name: value.name} }" 
+    class="card")
     img.card__img(:src="value.flags.svg" alt="flag")
     .card.card__title {{value.name}}
     .card__footer 
