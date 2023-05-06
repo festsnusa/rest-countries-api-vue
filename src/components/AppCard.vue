@@ -21,8 +21,9 @@ export default {
 <style lang="scss" scoped>
 .cards {
   display: grid;
-  grid-template-columns: auto auto auto auto;
-  grid-gap: 10px;
+  grid-template-columns: 1fr;
+  // grid-template-columns: auto auto auto auto;
+  // grid-gap: 10px;
 }
 
 .card {
@@ -31,6 +32,14 @@ export default {
   &__img {
     width: 100%;
     height: 120px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .cards {
+    // display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-gap: 10px;
   }
 }
 </style>

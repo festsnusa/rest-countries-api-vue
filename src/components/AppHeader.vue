@@ -1,15 +1,27 @@
 <template lang="pug">
 header.header
   RouterLink.header__left(:to="{ name: 'home'}") Where is the world?
-  .header__right
+  .header__right(@click="toggle")
     font-awesome-icon(icon="fa-regular fa-moon")
     span.header__mode {{mode.charAt(0).toUpperCase() + mode.slice(1)}} Mode
 </template>
 
 <script>
+import { mapStores } from 'pinia';
+import useModeStore from '@/stores/mode'
+
 export default {
   name: "AppHeader",
-  props: ["mode"]
+  props: ["mode"],
+  computed: {
+    ...mapStores(useModeStore)
+  },
+  methods: {
+    toggle() {
+      this.modeStore.mode = this.modeStore.mode == 'dark' ? 'light' : 'dark'
+      console.log(this.modeStore.mode)
+    },
+  }
 }
 </script>
 

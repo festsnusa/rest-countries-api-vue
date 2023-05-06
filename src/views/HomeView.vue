@@ -8,15 +8,21 @@ import AppFilter from '../components/AppFilter.vue'
 import AppCard from '../components/AppCard.vue'
 import json from '../data.json'
 
+import { mapStores } from 'pinia';
+import useModeStore from '@/stores/mode'
+
 export default {
   name: "HomeView",
   components: {
     AppFilter,
     AppCard
   },
+  computed: {
+    ...mapStores(useModeStore)
+  },
   data() {
     return {
-      mode: 'dark',
+      mode: '',
       arr: json,
     }
   },
@@ -32,7 +38,19 @@ export default {
       this.arr = this.arr.filter(e => e.name.toLowerCase().includes(value.toLowerCase()))
       console.log(this.arr)
     }
-  }
+  },
+  created() {
+
+    this.mode = this.modeStore.mode
+
+    this.modeStore.$subscribe((mutation, state) => {
+      this.mode = state.mode
+      console.log(this.mode)
+    })
+
+    console.log(this.mode)
+
+  },
 }
 </script>
 

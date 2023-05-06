@@ -21,16 +21,32 @@
 </template>
 
 <script>
+import { mapStores } from 'pinia';
+import useModeStore from '@/stores/mode'
+
 export default {
   name: "CardView",
   props: ["arr"],
+  computed: {
+    ...mapStores(useModeStore)
+  },
   data() {
     return {
-      current: null
+      current: null,
+      mode: '',
     }
   },
   created() {
     this.current = this.arr[0]
+
+    this.mode = this.modeStore.mode
+
+    this.modeStore.$subscribe((mutation, state) => {
+      this.mode = state.mode
+      console.log(this.mode)
+    })
+
+    console.log(this.mode)
   }
 }
 </script>
