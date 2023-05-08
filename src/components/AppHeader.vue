@@ -1,5 +1,5 @@
 <template lang="pug">
-header.header
+header.header(:class="`header_${mode}`")
   RouterLink.header__left(:to="{ name: 'home'}") Where is the world?
   .header__right(@click="toggle")
     font-awesome-icon(icon="fa-regular fa-moon")
@@ -12,28 +12,50 @@ import useModeStore from '@/stores/mode'
 
 export default {
   name: "AppHeader",
-  props: ["mode"],
   computed: {
     ...mapStores(useModeStore)
+  },
+  data() {
+    return {
+      mode: '',
+    }
   },
   methods: {
     toggle() {
       this.modeStore.mode = this.modeStore.mode == 'dark' ? 'light' : 'dark'
       console.log(this.modeStore.mode)
     },
-  }
+  },
+  created() {
+
+    this.mode = this.modeStore.mode
+
+    this.modeStore.$subscribe((mutation, state) => {
+      this.mode = state.mode
+    })
+
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/vars.scss';
+@import '@/assets/vars';
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 2rem 1rem;
-  background-color: $darkBlue;
+
+  &_dark {
+    background-color: $darkBlue;
+  }
+
+  &_light,
+  &_light a {
+    background-color: $lightGray;
+    color: $verydarkBlue;
+  }
 
   color: $lightGray;
 
