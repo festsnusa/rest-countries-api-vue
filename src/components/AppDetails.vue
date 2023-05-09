@@ -40,9 +40,9 @@
         p.border-countries__title 
           span Border Countries:
         ul.border-countries__list
-          RouterLink(v-for="value in current.borders" 
+          RouterLink(v-for="value in current.borders"
           :to="{ name: 'card', params: {name: this.json.find(e => e.alpha3Code === value).name} }")
-            li.border-countries__country(:class="`border-countries__country_${mode}`" :key="value" @click="windows.location.reload()") {{this.json.find(e => e.alpha3Code === value).name}}
+            li.border-countries__country(:class="`border-countries__country_${mode}`" :key="value" @click="update") {{this.json.find(e => e.alpha3Code === value).name}}
 </template>
 
 <script>
@@ -65,6 +65,10 @@ export default {
       current: null,
       mode: '',
     }
+  },
+  update() {
+    console.log('!')
+    this.current = this.json.filter(e => e.name === this.route.params.name)
   },
   created() {
     this.current = this.arr[0]
