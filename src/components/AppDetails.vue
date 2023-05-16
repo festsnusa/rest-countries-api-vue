@@ -41,17 +41,18 @@
           span Border Countries:
         ul.border-countries__list
           RouterLink(v-for="value in current.borders"
-          :to="{ name: 'card', params: {name: this.json.find(e => e.alpha3Code === value).name} }")
-            li.border-countries__country(:class="`border-countries__country_${mode}`" :key="value" @click="update") {{this.json.find(e => e.alpha3Code === value).name}}
+          :to="{ name: 'card', params: {name: json.find(e => e.alpha3Code === value).name} }")
+            li.border-countries__country(:class="`border-countries__country_${mode}`" :key="value" @click="update") {{json.find(e => e.alpha3Code === value).name}}
 </template>
 
 <script>
 import { mapStores } from 'pinia'
 import useModeStore from '@/stores/mode'
+import json from '@/data.json'
 
 export default {
   name: "AppDetails",
-  props: ["arr", "json"],
+  // props: ["arr", "json"],
   computed: {
     ...mapStores(useModeStore)
   },
@@ -64,14 +65,14 @@ export default {
     return {
       current: null,
       mode: '',
+      json: json,
     }
   },
   update() {
-    console.log('!')
-    this.current = this.json.filter(e => e.name === this.route.params.name)
+    this.current = json.filter(e => e.name === this.route.params.name)
   },
   created() {
-    this.current = this.arr[0]
+    this.current = json.filter(e => e.name === this.$route.params.name)[0]
 
     this.mode = this.modeStore.mode
 
