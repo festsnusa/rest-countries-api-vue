@@ -1,7 +1,7 @@
 <template lang="pug">
 .cards
   RouterLink.card(:class="`card_${mode}`" v-for="value in arr"
-    :to="`/${value.name}`" )
+    :to="`/${value.alpha3Code}`" )
     img.card__img(:src="value.flags.svg" alt="flag")
     .card__footer
       .card__title {{value.name}}

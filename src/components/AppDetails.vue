@@ -1,9 +1,10 @@
 <template lang="pug">
 .card-view(:class="`card-view_${mode}`")
   .card-view__back
-    button.card-view__button(:class="`card-view__button_${mode}`" @click="$router.go(-1)")
-      font-awesome-icon(:icon="['fas', 'arrow-left']") 
-      | Back
+    RouterLink(:to="`/`")
+      button.card-view__button(:class="`card-view__button_${mode}`")
+        font-awesome-icon(:icon="['fas', 'arrow-left']") 
+        | Back
   .card-view__main
     .card-view__left
       img.card-view__image(:src="current.flags.svg" :alt="current.name")
@@ -39,9 +40,9 @@
       .border-countries(v-show="current.borders")
         p.border-countries__title 
           span Border Countries:
-        ul.border-countries__list
+        ul.border-countries__list(v-show="!borders")
           RouterLink(v-for="value in current.borders"
-          :to="{ name: 'card', params: {name: json.find(e => e.alpha3Code === value).name} }")
+          :to="`/borders/${value}`")
             li.border-countries__country(:class="`border-countries__country_${mode}`" :key="value" @click="update") {{json.find(e => e.alpha3Code === value).name}}
 </template>
 
@@ -52,14 +53,9 @@ import json from '@/data.json'
 
 export default {
   name: "AppDetails",
-  // props: ["arr", "json"],
+  props: ["borders"],
   computed: {
     ...mapStores(useModeStore)
-  },
-  watch: {
-    $route() {
-      window.location.reload()
-    }
   },
   data() {
     return {
@@ -69,10 +65,10 @@ export default {
     }
   },
   update() {
-    this.current = json.filter(e => e.name === this.route.params.name)
+    this.current = json.filter(e => e.alpha3Code === this.route.params.name)
   },
   created() {
-    this.current = json.filter(e => e.name === this.$route.params.name)[0]
+    this.current = json.filter(e => e.alpha3Code === this.$route.params.name)[0]
 
     this.mode = this.modeStore.mode
 

@@ -1,6 +1,6 @@
 <template lang="pug">
 header.header(:class="`header_${mode}`")
-  RouterLink.header__left(:to="{ name: 'home'}") Where is the world?
+  .header__left(:to="{ name: 'home'}") Where is the world?
   .header__right(@click="toggle")
     font-awesome-icon(icon="fa-regular fa-moon")
     span.header__mode {{mode.charAt(0).toUpperCase() + mode.slice(1)}} Mode
@@ -52,7 +52,7 @@ export default {
   }
 
   &_light,
-  &_light a {
+  &_light &__left {
     background-color: $lightGray;
     color: $verydarkBlue;
   }
