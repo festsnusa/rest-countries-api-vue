@@ -15,7 +15,6 @@ const router = createRouter({
       path: '/:name',
       name: 'card',
       component: AppDetails,
-      // props: route => ({ json: json, arr: json.filter(e => e.name === route.params.name) })
     },
     {
       path: "/:catchAll(.*)",

@@ -1,7 +1,7 @@
 <template lang="pug">
 .cards
   RouterLink.card(:class="`card_${mode}`" v-for="value in arr"
-    :to="{ name: 'card', params: {name: value.name} }" )
+    :to="`/${value.name}`" )
     img.card__img(:src="value.flags.svg" alt="flag")
     .card__footer
       .card__title {{value.name}}
@@ -37,7 +37,6 @@ export default {
 
     this.modeStore.$subscribe((mutation, state) => {
       this.mode = state.mode
-      console.log(this.mode)
     })
 
   },
@@ -65,8 +64,6 @@ export default {
     color: $white;
     background-color: $darkBlue;
   }
-
-  &_light {}
 
   &__img {
     width: 100%;
